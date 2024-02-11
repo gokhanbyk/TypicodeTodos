@@ -50,7 +50,17 @@ const toggleCompleted = (e) => {
   }
 };
 
-const updateTodo = (id, completed) => {};
+const updateTodo = (id, completed) => {
+  fetch(`${apiUrl}/${id}`, {
+    method: "PUT",
+    body: JSON.stringify({ completed }),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => console.log(data));
+};
 
 const init = () => {
   document.addEventListener("DOMContentLoaded", getTodos);
