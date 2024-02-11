@@ -20,4 +20,28 @@ function addTodoToDom(todo) {
   document.getElementById("todo-list").appendChild(div);
 }
 
-getTodos();
+const createTodo = (e) => {
+  e.preventDefault();
+
+  const newTodo = {
+    title: e.target.firstElementChild.value,
+    completed: false,
+  };
+
+  fetch(apiUrl, {
+    method: "POST",
+    body: JSON.stringify(newTodo),
+    headers: {
+      "Content-Type": "application/json",
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => addTodoToDom(data));
+};
+
+const init = () => {
+  document.addEventListener("DOMContentLoaded", getTodos);
+  document.querySelector("#todo-form").addEventListener("submit", createTodo);
+};
+
+inti();
