@@ -57,9 +57,19 @@ const updateTodo = (id, completed) => {
     headers: {
       "Content-Type": "application/json",
     },
-  })
-    .then((res) => res.json())
-    .then((data) => console.log(data));
+  });
+};
+
+const deleteTodo = (e) => {
+  if (e.target.classList.contains("todo")) {
+    const id = e.target.dataset.id;
+
+    fetch(`${apiUrl}/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then(() => e.target.remove());
+  }
 };
 
 const init = () => {
@@ -68,6 +78,7 @@ const init = () => {
   document
     .querySelector("#todo-list")
     .addEventListener("click", toggleCompleted);
+  document.querySelector("#todo-list").addEventListener("dblclick", deleteTodo);
 };
 
 init();
